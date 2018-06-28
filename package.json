@@ -1,0 +1,26 @@
+{
+  "name": "reddit-clone",
+  "version": "1.0.0",
+  "description": "In this exercise I practice REST, SQL, DOM and CSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DownTownScarf7/reddit-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DownTownScarf7/reddit-clone/issues"
+  },
+  "homepage": "https://github.com/DownTownScarf7/reddit-clone#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
+}
