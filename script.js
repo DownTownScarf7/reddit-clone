@@ -4,7 +4,7 @@ const http = new XMLHttpRequest(),
   newElem = (tag) => { return document.createElement(tag); },
   select = (tag) => { return document.querySelector(tag) };
 
-http.open('GET', 'http://localhost:3000/api/post.json', true);
+http.open('GET', 'http://localhost:3000/api/post', true);
 http.onload = () => {
   const res = JSON.parse(http.responseText).post_data;
   res.forEach(elem => {
