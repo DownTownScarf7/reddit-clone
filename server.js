@@ -48,7 +48,59 @@ app.get('/api/posts', (req, res) => {
     }
 
     res.json({
-      post_data: rows,
+      posts: rows,
+    });
+  });
+});
+
+app.delete('/api/posts/:id', (req, res) => {
+  let sql = 'SELECT * FROM posts WHERE id=?;';
+
+  conn.query(sql, req.params.id, (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send();
+      return;
+    }
+
+    const deleted = rows;
+    sql = 'DELETE FROM posts WHERE id=?;';
+
+    conn.query(sql, req.params.id, err => {
+      if (err) {
+        console.error(err);
+        res.status(500).send();
+        return;
+      }
+
+      res.json({
+        deleted,
+      });
+    });
+  });
+});
+
+app.post('/api/posts', (req, res) => {
+  let sql = `INSERT INTO posts (title, url, timestamp, owner) VALUE ("${req.body.title}", "${req.body.url}", unix_timestamp(), "${req.body.owner}");`;
+
+  conn.query(sql, (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send();
+      return;
+    }
+
+    sql = `SELECT * FROM posts WHERE ID = ${rows.insertId};`;
+    conn.query(sql, (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send();
+        return;
+      }
+
+      res.json({
+        posts: rows,
+      });
     });
   });
 });
