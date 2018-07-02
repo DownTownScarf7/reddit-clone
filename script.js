@@ -28,7 +28,15 @@ select('#post-btn').onclick = () => {
 http.open('GET', 'http://localhost:3000/api/posts', true);
 http.setRequestHeader("Content-Type", "application/json");
 http.onload = () => {
-  const res = JSON.parse(http.responseText).posts;
+  let res = null;
+  try {
+    res = JSON.parse(http.responseText).posts;
+  }
+  catch (err) {
+    console.error(err);
+    return;
+  }
+  console.log(res);  // DEBUG
   if (res) {
     res.forEach(elem => {
       const container = newElem('div'),
@@ -54,6 +62,16 @@ http.onload = () => {
       btn_del.onclick = () => {
         container.remove();
         http.open('DELETE', `http://localhost:3000/api/posts/${elem.id}`, true);
+        http.send();
+      }
+
+      btn_up.onclick = () => {
+        http.open('PUT', `http://localhost:3000/api/posts/${elem.id}/upvote`, true);
+        http.send();
+      
+      }
+      btn_down.onclick = () => {
+        http.open('PUT', `http://localhost:3000/api/posts/${elem.id}/downvote`, true);
         http.send();
       }
     });
