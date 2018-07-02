@@ -54,7 +54,7 @@ app.get('/api/posts', (req, res) => {
 });
 
 app.delete('/api/posts/:id', (req, res) => {
-  let sql = 'SELECT * FROM posts WHERE id=?;';
+  let sql = 'SELECT * FROM posts WHERE id = ?;';
 
   conn.query(sql, req.params.id, (err, rows) => {
     if (err) {
@@ -63,8 +63,7 @@ app.delete('/api/posts/:id', (req, res) => {
       return;
     }
 
-    const deleted = rows;
-    sql = 'DELETE FROM posts WHERE id=?;';
+    sql = `DELETE FROM posts WHERE id = ?;`;
 
     conn.query(sql, req.params.id, err => {
       if (err) {
@@ -74,7 +73,7 @@ app.delete('/api/posts/:id', (req, res) => {
       }
 
       res.json({
-        deleted,
+        rows,
       });
     });
   });
@@ -90,8 +89,66 @@ app.post('/api/posts', (req, res) => {
       return;
     }
 
-    sql = `SELECT * FROM posts WHERE ID = ${rows.insertId};`;
+    sql = `SELECT * FROM posts WHERE id = ${rows.insertId};`;
     conn.query(sql, (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send();
+        return;
+      }
+
+      res.json({
+        posts: rows,
+      });
+    });
+  });
+});
+
+app.put('/api/posts/:id/upvote', (req, res) => {
+  let sql = `
+  UPDATE posts
+    SET score = CASE WHEN vote != '+1' THEN score + 1 ELSE score - 1 END,
+        vote = CASE WHEN vote != '+1' THEN '+1' ELSE '0' END
+  WHERE (id = ?);`;
+
+  conn.query(sql, req.params.id, (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send();
+      return;
+    }
+
+    sql = `SELECT * FROM posts WHERE id = ?;`;
+    conn.query(sql, req.params.id, (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send();
+        return;
+      }
+
+      res.json({
+        posts: rows,
+      });
+    });
+  });
+});
+
+app.put('/api/posts/:id/downvote', (req, res) => {
+  let sql = `
+  UPDATE posts
+    SET score = CASE WHEN vote != '-1' THEN score - 1 ELSE score + 1 END,
+        vote = CASE WHEN vote != '-1' THEN '-1' ELSE '0' END
+  WHERE (id = ?);`;
+
+  conn.query(sql, req.params.id, (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send();
+      return;
+    }
+
+    sql = `SELECT * FROM posts WHERE id = ?;`;
+    conn.query(sql, req.params.id, (err, rows) => {
       if (err) {
         console.error(err);
         res.status(500).send();
