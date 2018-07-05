@@ -3,11 +3,14 @@
 require('dotenv').config();
 const express = require('express'),
   mysql = require('mysql'),
-  path = require('path'),
   app = express(),
   PORT = 3000;
 app.use(express.static(__dirname));
 app.use(express.json());
+app.use('/src', express.static('src'));
+app.use('/assets', express.static('assets'));
+app.use('/scripts', express.static('scripts'));
+app.use('/styles', express.static('styles'));
 const conn = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -16,7 +19,7 @@ const conn = mysql.createConnection({
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname, './index.html');
+  res.sendFile(__dirname + '/src/', 'index.html');
 });
 
 app.get('/api/users', (req, res) => {
