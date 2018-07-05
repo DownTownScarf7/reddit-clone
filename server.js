@@ -38,6 +38,7 @@ app.get('/api/users', (req, res) => {
   });
 });
 
+// SQL command that created the database:
 //CREATE TABLE posts (id int AUTO_INCREMENT NOT NULL, title varchar(50) NOT NULL, url varchar(255) NOT NULL, timestamp int NOT NULL, score int NOT NULL, owner varchar(20), vote ENUM ('-1', '0', '+1') DEFAULT '0', primary key (id));
 
 app.get('/api/posts', (req, res) => {
