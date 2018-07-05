@@ -1,9 +1,35 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: 'Lato', sans-serif;
 }
 
 .post {
+  position: relative;
   background-color: rgba(83, 83, 83, 0.5);
   border: 1px solid #000000;
+/* }
+.post p {
+  margin-left: 35px;
 }
+
+.post-title {
+  font-size: 35px;
+}
+
+.post-owner {
+  font-size: 10px;
+}
+
+.post-timestamp {
+  font-size: 10px;
+}
+
+.post-score {
+  position: absolute;
+  margin: auto auto;
+}
+
+.post-btn {
+  position: absolute;
+} */
