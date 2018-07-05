@@ -36,35 +36,35 @@ http.onload = () => {
   }
   console.log(res);  // DEBUG
   if (res) {
-    const postElemets = res.map(elem => (
-      <div id={'post_' + elem.id} className="post" key={elem.id}>
-        <h3>{elem.title}</h3>
-        <h5>{elem.owner}</h5>
-        <p>{elem.timestamp}</p>
-        <h3>{elem.score}</h3>
-        <p>{elem.url}</p>
-        <button>UP</button>
-        <button>DOWN</button>
-        <button>edit</button>
-        <button onClick={clickDel}>delete</button>
-      </div>
-    ));
-    ReactDOM.render(postElemets, document.querySelector('#posts'));
     const clickDel = event => {
       event.target.parentNode.remove();
-      http.open('DELETE', `http://localhost:3000/api/posts/${elem.id}`, true);
+      http.open('DELETE', `http://localhost:3000/api/posts/${event.target.parentNode.dataset.id}`, true);
       http.send();
     }
 
-    // btn_up.onclick = () => {
-    //   http.open('PUT', `http://localhost:3000/api/posts/${elem.id}/upvote`, true);
-    //   http.send();
-    
-    // }
-    // btn_down.onclick = () => {
-    //   http.open('PUT', `http://localhost:3000/api/posts/${elem.id}/downvote`, true);
-    //   http.send();
-    // }
+    const upDoot = event => {
+      http.open('PUT', `http://localhost:3000/api/posts/${event.target.parentNode.dataset.id}/upvote`, true);
+      http.send();
+    }
+
+    const downDoot = event => {
+      http.open('PUT', `http://localhost:3000/api/posts/${event.target.parentNode.dataset.id}/downvote`, true);
+      http.send();
+    }
+    const postElemets = res.map(elem => (
+      <div id={'post_' + elem.id} data-id={elem.id} className="post" key={elem.id}>
+        <p className='post-title'>{elem.title}</p>
+        <p className='post-owner'>{elem.owner}</p>
+        <p className='post-timestamp'>{elem.timestamp}</p>
+        <h3 className='post-score'>{elem.score}</h3>
+        <p className='post-url'>{elem.url}</p>
+        <button className='post-btn up' onClick={upDoot}>UP</button>
+        <button className='post-btn down' onClick={downDoot}>DOWN</button>
+        <button className='post-btn edit'>edit</button>
+        <button className='post-btn delete' onClick={clickDel}>delete</button>
+      </div>
+    ));
+    ReactDOM.render(postElemets, document.querySelector('#posts'));
   }
 }
 http.send();
