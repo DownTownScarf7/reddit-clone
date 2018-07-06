@@ -1,12 +1,16 @@
 'use strict';
 
-const pw = document.querySelector('#password'),
+const un = document.querySelector('#username'),
+  pw = document.querySelector('#password'),
   show = document.querySelector('img');
 
 document.querySelector('form').addEventListener('click', event => {
   switch (event.target) {
     case document.querySelector('#submit'):
-      event.preventDefault();
+      if (un.value && pw.value) {
+        event.preventDefault();
+        window.location = `http://localhost:3000/${un.value}`;
+      }
       break;
     case show:
       if (pw.type === 'password') {
