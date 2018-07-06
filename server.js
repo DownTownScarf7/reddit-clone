@@ -6,6 +6,7 @@ const express = require('express'),
   path = require('path'),
   app = express(),
   PORT = 3000;
+
 app.use(express.static(__dirname));
 app.use(express.json());
 app.use('/src', express.static('src'));
