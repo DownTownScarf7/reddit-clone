@@ -59,10 +59,12 @@ function getPosts() {
           <p className='post-title'>{elem.title}</p>
           <p className='post-owner'>{elem.owner}</p>
           <p className='post-timestamp'>{elem.timestamp}</p>
-          <h3 className='post-score'>{elem.score}</h3>
           <p className='post-url'>{elem.url}</p>
-          <button className='post-btn up' onClick={upDoot}>UP</button>
-          <button className='post-btn down' onClick={downDoot}>DOWN</button>
+          <div className='score-container'>
+            <img className='post-btn up' src='http://www.pngmart.com/files/3/Up-Arrow-PNG-HD.png' onClick={upDoot}/>
+            <h3 className='post-score'>{elem.score}</h3>
+            <img className='post-btn down' src='http://www.pngmart.com/files/3/Down-Arrow-PNG-Free-Download-279x279.png' onClick={downDoot}/>
+          </div>
           <button className='post-btn edit'>edit</button>
           <button className='post-btn delete' onClick={clickDel}>delete</button>
         </div>
